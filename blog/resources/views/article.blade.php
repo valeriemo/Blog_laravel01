@@ -1,5 +1,6 @@
  @extends('master')
  @section('title', 'Article')
+ 
  @section('content')
 
  <!-- Page Header-->
