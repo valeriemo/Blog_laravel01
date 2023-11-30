@@ -14,9 +14,11 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        $blog = BlogPost::all();
+        // select * from blog_posts;
+        $blogs = BlogPost::all();
 
-        return $blog;
+        //return view('blog.index', ['blogs', $blogs]);
+        return view('blog.index', compact('blogs'));
     }
 
     /**
@@ -26,7 +28,7 @@ class BlogPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.create');
     }
 
     /**
@@ -35,20 +37,17 @@ class BlogPostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BlogPost  $blogPost
+     * @param  \App\Models\BlogPost  $blogPost //Appel le model
      * @return \Illuminate\Http\Response
      */
     public function show(BlogPost $blogPost)
     {
-        //
+        // select * from blog_posts where id = $blogPost
+        return view('blog.show', compact('blogPost'));
     }
 
     /**

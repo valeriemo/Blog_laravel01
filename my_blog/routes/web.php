@@ -17,5 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blog', [BlogPostController::class, 'index']);
+Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
 
+// laravel va recevoir l'id a partir d'une variable $blogPost(correspond au model)
+Route::get('/blog/{blogPost}', [BlogPostController::class, 'show'])->name('blog.show'); //le nom + la méthode
+
+Route::get('/blog-create', [BlogPostController::class, 'create'])->name('blog.create'); 
+Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.store'); //reste sur la meme page
