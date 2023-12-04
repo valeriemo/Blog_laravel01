@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,19 +12,27 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 text-center pt-2">
-            <h1 class="display-4">
-                {{ config('app.name') }}
-            </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center pt-2">
+                <h1 class="display-4">
+                    {{ config('app.name') }}
+                </h1>
+            </div>
         </div>
-    </div>
-    <hr>
+        <hr>
 
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session('success')}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        
         @yield('content')
 
-</div>
+    </div>
 
 </body>
+
 </html>

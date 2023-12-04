@@ -13,14 +13,23 @@ use App\Http\Controllers\BlogPostController;
 |
 */
 
+// Méthode pour afficher la page d'accueil
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
+// Méthode pour afficher la page d'un blog en particulier
+Route::get('/blog/{blogPost}', [BlogPostController::class, 'show'])->name('blog.show');
 
-// laravel va recevoir l'id a partir d'une variable $blogPost(correspond au model)
-Route::get('/blog/{blogPost}', [BlogPostController::class, 'show'])->name('blog.show'); //le nom + la méthode
+// Méthode pour afficher la page de création
+Route::get('/blog-create', [BlogPostController::class, 'create'])->name('blog.create');
+// Méthode pour store un nouveau blog
+Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.store');
 
-Route::get('/blog-create', [BlogPostController::class, 'create'])->name('blog.create'); 
-Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.store'); //reste sur la meme page
+// Méthode pour afficher la page de modification
+Route::get('/blog/edit/{blogPost}', [BlogPostController::class, 'edit'])->name('blog.edit');
+// Méthode pour store le update
+Route::put( '/blog/edit/{blogPost}', [BlogPostController::class, 'update'])->name('blog.edit');
+
+Route::delete('/blog/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete');
