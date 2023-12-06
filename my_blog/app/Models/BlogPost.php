@@ -17,4 +17,9 @@ class BlogPost extends Model
 
     // les champs modifiables
     protected $fillable = ['title', 'body', 'user_id'];
+
+    // models liés (/->chemin web) (\->chemin ordi)
+    public function blogHasUser(){
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
 }

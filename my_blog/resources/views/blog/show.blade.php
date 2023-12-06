@@ -8,10 +8,10 @@
         <h4 class="display-5 mt-2">{{$blogPost->title}}</h4>
         <hr>
         <p>
-            {{$blogPost->body}}
+            {!! $blogPost->body !!}
         </p>
         <p>
-            <strong>Author: </strong>{{$blogPost->user_id}}
+            <strong>Author: </strong>{{$blogPost->blogHasUser->name}}
         </p>
     </div>
 </div>

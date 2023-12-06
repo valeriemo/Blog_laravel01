@@ -33,3 +33,9 @@ Route::get('/blog/edit/{blogPost}', [BlogPostController::class, 'edit'])->name('
 Route::put( '/blog/edit/{blogPost}', [BlogPostController::class, 'update'])->name('blog.edit');
 
 Route::delete('/blog/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete');
+
+// Test de query
+Route::get('query', [BlogPostController::class, 'query']);
+
+// Pagination
+Route::get('blog-page', [BlogPostController::class, 'pagination']);

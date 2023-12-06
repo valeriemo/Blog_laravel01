@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BlogPostController extends Controller
 {
@@ -108,5 +109,40 @@ class BlogPostController extends Controller
         $blogPost->delete();
 
         return redirect(route('blog.index'))->withSuccess('Article supprimé !');
+    }
+
+    public function query(){
+        //$blog = BlogPost::all();
+        //$blog = BlogPost::Select('title', 'body')->get();
+        //$blog = BlogPost::Select()->orderby('id', 'desc')->first();
+        //$blog = BlogPost::where("id", 3)->get();  //tableau multidimensionnel
+        //$blog = BlogPost::find(1); //select * from table where id = 
+        //$blog = BlogPost::select('title', 'body')->where('title', 'like', 'Art%')->orderby('title')->get();
+        //$blog = BlogPost::select()->where('user_id', 1)->where('title', 'like', '%te%')->get(); // AND (2 where)
+        //$blog = BlogPost::select()->where('user_id', 1)->orWhere('id', 4)->get();
+        // select * from blog_post INNER JOIN user on user_id = users.id;
+        //$blog = BlogPost::select()->join('users', 'Blog_posts.user_id', 'users.id')->get();
+        // select * from blog_post RIGHT OUTER JOIN user on user_id = users.id;
+        // $blog = BlogPost::select()
+        //                 ->rightJoin('users', 'Blog_posts.user_id', 'users.id')
+        //                 ->get();
+
+        //$blog = BlogPost::select()->where('title', 'article')->get()->count();
+        //$blog = BlogPost::count();
+        //$blog = BlogPost::max('id');
+
+        //SELECT count(*) as blogs, user_id FROM my_blog.blog_posts group by user_id;
+        //$blog = BlogPost::select(DB::raw('count(*) as blogs, user_id'))->groupBy('user_id')->get();
+        //$blog = BlogPost::find(1);
+        //return $blog->blogHasUser->name;
+
+    }
+
+    public function pagination(){
+
+        $blogs = BlogPost::select()->paginate(3);
+
+        //return $blogs;
+        return view('blog.pagination', compact('blogs'));
     }
 }
