@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +32,7 @@ Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.st
 Route::get('/blog/edit/{blogPost}', [BlogPostController::class, 'edit'])->name('blog.edit');
 // Méthode pour store le update
 Route::put( '/blog/edit/{blogPost}', [BlogPostController::class, 'update'])->name('blog.edit');
-
+// Méthode pour supprimer un article
 Route::delete('/blog/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete');
 
 // Test de query
@@ -39,3 +40,9 @@ Route::get('query', [BlogPostController::class, 'query']);
 
 // Pagination
 Route::get('blog-page', [BlogPostController::class, 'pagination']);
+
+// Auth: http://127.0.0.1:8001/registration
+Route::get('/registration', [CustomAuthController::class, 'create'])->name('registration');
+Route::post('/registration', [CustomAuthController::class, 'store'])->name('registration');
+Route::get('/login',  [CustomAuthController::class, 'index'])->name('login'); //la page login doit toujours s'appeller login
+Route::post('/authentication',  [CustomAuthController::class, 'authentication'])->name('authentication');
