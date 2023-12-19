@@ -16,12 +16,12 @@ class CustomAuthController extends Controller
      */
     public function index()
     {
-        return view('auth.login'); //dossier:auth page:login
+        return view('auth.login');
     }
 
     /**
      * Show the form for creating a new resource.
-     * Saisir un nouveau utilisateur
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -31,37 +31,73 @@ class CustomAuthController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *                                                                       ****** FAIRE VALIDATION DANS TP1 !!!!!
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'min:2|max:45',
+            'name' => 'min:2 | max:45',
             'email' => 'email|required|unique:users',
-            'password' => ['min:6','max:20'],
+            'password' => 'min:6|max:20',
+            //  'password' => ['min:6', 'max:20'],
         ]);
-        // si la validation ne passe pas redirect()->back()->withErrors()->withInputs
-        // sinon continue...
+        // redirect()->back()->withErrors()->withInput()
+        // v 10 publier le dossier lang / php artisan lang:publish
+
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => $request->password,
+        // ]);
+
         $user = new User;
         $user->fill($request->all());
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect(route('login'))->withSuccess('Utilisateur enregistré !');
+        return redirect(route('login'))->withSuccess('Utilisateur enregistré!');
     }
 
     /**
-     * Méthode pour authentifier un login
-     * quand c'est une méthode post il y a toujours un request
+     * Login
      */
-    public function authentication(Request $request){
+    public function authentication(Request $request)
+    {
         $request->validate([
-            'email' => 'email|required',
-            'password' => 'min:6|max:20'
+            'email' => 'email|required|exists:users',
+            'password' => 'min:6|max:20',
         ]);
 
-        return $request;
+        $credentials = $request->only('email', 'password');
+
+
+        if (!Auth::validate($credentials)) :
+            return redirect(route('login'))->withErrors(trans('auth.password'))->withInput();
+        endif;
+
+        $user = Auth::getProvider()->retrieveByCredentials($credentials);
+
+        Auth::login($user);
+
+        return redirect()->intended(route('blog.index'));
+    }
+
+    /**
+     * logout
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect(route('login'));
+    }
+
+    /**
+     * Page qui affiche la liste des users et de leurs blogs
+     */
+    public function userList(){
+        $users = User::select()->orderBy('name')->paginate(4);
+        return view('auth.user-list', compact('users'));
     }
 }

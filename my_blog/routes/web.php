@@ -24,16 +24,16 @@ Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blogPost}', [BlogPostController::class, 'show'])->name('blog.show');
 
 // Méthode pour afficher la page de création
-Route::get('/blog-create', [BlogPostController::class, 'create'])->name('blog.create');
+Route::get('/blog-create', [BlogPostController::class, 'create'])->name('blog.create')->middleware('auth');
 // Méthode pour store un nouveau blog
-Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.store');
+Route::post('/blog-create', [BlogPostController::class, 'store'])->name('blog.store')->middleware('auth');
 
 // Méthode pour afficher la page de modification
-Route::get('/blog/edit/{blogPost}', [BlogPostController::class, 'edit'])->name('blog.edit');
+Route::get('/blog/edit/{blogPost}', [BlogPostController::class, 'edit'])->name('blog.edit')->middleware('auth');
 // Méthode pour store le update
-Route::put( '/blog/edit/{blogPost}', [BlogPostController::class, 'update'])->name('blog.edit');
+Route::put( '/blog/edit/{blogPost}', [BlogPostController::class, 'update'])->name('blog.edit')->middleware('auth');
 // Méthode pour supprimer un article
-Route::delete('/blog/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete');
+Route::delete('/blog/{blogPost}', [BlogPostController::class, 'destroy'])->name('blog.delete')->middleware('auth');
 
 // Test de query
 Route::get('query', [BlogPostController::class, 'query']);
@@ -46,3 +46,6 @@ Route::get('/registration', [CustomAuthController::class, 'create'])->name('regi
 Route::post('/registration', [CustomAuthController::class, 'store'])->name('registration');
 Route::get('/login',  [CustomAuthController::class, 'index'])->name('login'); //la page login doit toujours s'appeller login
 Route::post('/authentication',  [CustomAuthController::class, 'authentication'])->name('authentication');
+Route::get('/logout',[CustomAuthController::class, 'logout'])->name('logout');
+// POur afficher les posts des users
+Route::get('/user-list', [CustomAuthController::class, 'userList'])->name('user.list')->middleware('auth');

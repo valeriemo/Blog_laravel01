@@ -1,5 +1,5 @@
 <?php
-
+// GESTION DES ALIAS DU SYSTEME
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
