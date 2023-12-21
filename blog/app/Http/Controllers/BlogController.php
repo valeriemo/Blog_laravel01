@@ -31,7 +31,7 @@ class BlogController extends Controller
     // le post est envoyer en tant que tableau mais le request fait la convertion en tant qu'objet deja
     public function message(Request $request)
     {
-        //return $request->name; 
-        return view('contact', ['data' => $request]);
+        return $request->name; 
+        //return view('contact', ['data' => $request]);
     }
 }
